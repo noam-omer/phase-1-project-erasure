@@ -5,7 +5,7 @@ function fetchPoem(searchTerm) {
       return response.json()
     })
   .then(function(data){
-    //console.log(data)
+    console.log(data)
     renderPoem(data)
   })
   }
@@ -20,6 +20,7 @@ function fetchPoem(searchTerm) {
       p.innerHTML = lines[i]
       
       poemBox.appendChild(p)
+      console.log(p)
     }
     //const poem = document.createElement('p');
     //main.appendChild(poem);

@@ -4,10 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>fetch() Lab</title>
-  <script type="text/javascript" src="index.js"></script>
+  <title>Erasure</title>
+  <script defer type="text/javascript" src="index.js"></script>
 </head>
 <body>
-  <main></main>
+  <div id = 'header'>
+    <h1>Eras_re</h1>
+  </div>
+  <main>
+    <form id = 'userInput'>
+      <p>Enter search term(s) and click "Find" to find a poem</p>
+      <input id = 'inputField'
+          type="text"
+          name="searchTerms"
+          value=""
+          placeholder="Enter search terms here..."
+          class="input-text"
+        />
+    </form>
+    <button id = "searchButton">Search</button>
+    <div id = 'poemBox'>
+    </div>
+
+  </main>
 </body>
 </html>

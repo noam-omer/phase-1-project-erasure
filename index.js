@@ -1,6 +1,5 @@
-const searchTerm = 'apple'
 
-function fetchPoem() {
+function fetchPoem(searchTerm) {
     fetch(`https://poetrydb.org/lines/${searchTerm}`)
     .then(function(response){
       return response.json()
@@ -12,30 +11,24 @@ function fetchPoem() {
   }
   
   function renderPoem(data) {
-    const main = document.querySelector('main');
+    const poemBox = document.getElementById('poemBox');
+    //clear the page with each search?
+    poemBox.innerHTML = ''
     const lines = data[0].lines
     for (let i = 0; i < lines.length; i++){
       const p = document.createElement('p')
       p.innerHTML = lines[i]
-      console.log(main)
-      main.appendChild(p)
+      
+      poemBox.appendChild(p)
     }
     //const poem = document.createElement('p');
     //main.appendChild(poem);
   }
   
-  document.addEventListener('DOMContentLoaded', function() {
-    fetchPoem();
+  const searchButton = document.getElementById('searchButton')
+  searchButton.addEventListener('click', function() {
+    const inputText = document.getElementById('inputField').value
+    console.log(inputText)
+    fetchPoem(inputText);
   });
   
-  /*
-  from prior lab
-  function renderBooks(books) {
-  const main = document.querySelector('main');
-  books.forEach(book => {
-    const h2 = document.createElement('h2');
-    h2.innerHTML = book.name;
-    main.appendChild(h2);
-  });
-}
-*/

@@ -8,4 +8,4 @@ Click the Whiteout/Blackout button to switch from whited out to blacked out text
 
 MORE INFORMATION ON ERASURES:
 
-https://poets.org/glossary/erasure
+https://poets.org/glossary/erasure# phase-1-project-erasure

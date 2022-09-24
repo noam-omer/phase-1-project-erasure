@@ -1,9 +1,11 @@
-WHAT
-BananaPlane calculates the carbon impact of air travel in terms of bananas, and vice versa
+Erasures are poems in which some words have been erased or blacked out, creating gaps in the text. "Erasure" (this website) is a tool for creating erasures using the PoetryDB poetry database.
 
-HOW
-By default, the site converts from miles of air travel to bananas. Just enter your start and end destinations, click the "convert" button, and see how many bananas you could have eaten instead!
+Write a word or phrase in the search bar (or leave it blank), click "Find a poem," and the app will return a random poem that contains the search terms.
 
-To convert from bananas to air travel instead, click the "convert from bananas to air travel" button under the form.
-Enter the number of bananas you want to eat, and the site will tell you how many miles traveled this translates to
+Then use the slider to erase more or less of the poem.
 
+Click the Whiteout/Blackout button to switch from whited out to blacked out text
+
+MORE INFORMATION ON ERASURES:
+
+https://poets.org/glossary/erasure

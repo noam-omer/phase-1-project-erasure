@@ -11,7 +11,6 @@ function fetchPoem(searchTerm) {
   }
 
   function toggleBlackout(){
-    console.log('in here')
     const blackoutButton = document.getElementById('blackoutButton')
     const isBlackedout = sessionStorage.getItem('isBlackedout')
     sessionStorage.setItem('isBlackedout', isBlackedout === 'active' ? 'inactive' : 'active')
@@ -27,7 +26,7 @@ function fetchPoem(searchTerm) {
     const lines = JSON.parse(sessionStorage.getItem('data'))
     let count = 1
     const isBlackedout = sessionStorage.getItem('isBlackedout')
-    console.log(isBlackedout)
+   // console.log(isBlackedout)
     for (let i = 0; i < lines.length; i++){
       const div = document.createElement('div')
       const span = document.createElement('span')
@@ -48,15 +47,18 @@ function fetchPoem(searchTerm) {
       poemBox.appendChild(div)
       
     }
-    //const poem = document.createElement('p');
-    //main.appendChild(poem);
   }
   
-  const searchButton = document.getElementById('searchButton')
-  searchButton.addEventListener('click', function() {
-    
-    const inputText = document.getElementById('inputField').value
+  const searchForm = document.getElementById('userInput')
+  searchForm.addEventListener('submit', event => {
+    event.preventDefault()
+    //console.log(event)
+    const inputText = event.target.elements[0].value
+    console.log(inputText)
+    //console.log(event.target)
+    //console.log(event.target.elements[0].value)
     fetchPoem(inputText);
+    event.target.elements[0].value = ''
   });
 
   const blackoutButton = document.getElementById('blackoutButton')
@@ -64,3 +66,4 @@ function fetchPoem(searchTerm) {
     toggleBlackout();
   });
   
+//need to catch error that results when you search for a word that's not in archive

@@ -5,22 +5,48 @@ function fetchPoem(searchTerm) {
       return response.json()
     })
   .then(function(data){
-    console.log(data)
-    renderPoem(data)
+    sessionStorage.setItem('data', JSON.stringify(data[0].lines))
+    renderPoem()
   })
   }
+
+  function toggleBlackout(){
+    console.log('in here')
+    const blackoutButton = document.getElementById('blackoutButton')
+    const isBlackedout = sessionStorage.getItem('isBlackedout')
+    sessionStorage.setItem('isBlackedout', isBlackedout === 'active' ? 'inactive' : 'active')
+    blackoutButton.innerHTML = isBlackedout === 'active' ? 'Erase!' : 'Reveal!'
+    renderPoem()
+  }
   
-  function renderPoem(data) {
+
+  function renderPoem() {
     const poemBox = document.getElementById('poemBox');
     //clear the page with each search?
     poemBox.innerHTML = ''
-    const lines = data[0].lines
+    const lines = JSON.parse(sessionStorage.getItem('data'))
+    let count = 1
+    const isBlackedout = sessionStorage.getItem('isBlackedout')
+    console.log(isBlackedout)
     for (let i = 0; i < lines.length; i++){
-      const p = document.createElement('p')
-      p.innerHTML = lines[i]
+      const div = document.createElement('div')
+      const span = document.createElement('span')
+      lines[i].split(' ').map((word) => {
+        const innerSpan = document.createElement('span')
+        if(count%2 === 0 && isBlackedout === 'active') {
+          innerSpan.className = 'blacked-out'
+          innerSpan.innerHTML = `${word} `
+          span.appendChild(innerSpan)
+        }
+        else{
+          span.innerHTML += `${word} `
+        }
+        count++;
+      })
+      div.appendChild(span)
       
-      poemBox.appendChild(p)
-      console.log(p)
+      poemBox.appendChild(div)
+      
     }
     //const poem = document.createElement('p');
     //main.appendChild(poem);
@@ -28,8 +54,13 @@ function fetchPoem(searchTerm) {
   
   const searchButton = document.getElementById('searchButton')
   searchButton.addEventListener('click', function() {
+    
     const inputText = document.getElementById('inputField').value
-    console.log(inputText)
     fetchPoem(inputText);
+  });
+
+  const blackoutButton = document.getElementById('blackoutButton')
+  blackoutButton.addEventListener('click', function() {
+    toggleBlackout();
   });
   

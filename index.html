@@ -15,20 +15,32 @@
   <main>
     <form id = 'userInput'>
       <p>Enter search term(s) and click "Find" to find a poem</p>
+     
+      <div class="dropdown">
+        <select id = 'dropdown'>
+          <option value = 'author'>Author</option>
+          <option value = 'title'>Title</option>
+          <option value = 'keywords'>Keyword(s) </option>
+      </select> 
+     </div>
+
       <input id = 'inputField'
-          type="text"
-          name="searchTerms"
-          value=""
-          placeholder="Enter search terms here..."
-          class="input-text"
+          select
+          type = "text"
+          name = "keywords"
+          value = ""
+          placeholder = "search terms..."
+          class = "input-text"
         />
     </form>
-    <button id = "searchButton">Search</button>
+    <button type = 'submit' form = 'userInput'>Search</button>
     <button id = "blackoutButton">Erase!</button>
 
     <div id = 'poemBox'>
     </div>
 
+
   </main>
 </body>
 </html>
+

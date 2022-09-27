@@ -1,14 +1,20 @@
 
-function fetchPoem(searchTerm) {
-    fetch(`https://poetrydb.org/lines/${searchTerm}`)
+function fetchPoem(searchType, searchTerm) {
+  console.log(dropdownValue)
+    fetch(`https://poetrydb.org/${searchType}/${searchTerm}`)
     .then(function(response){
       return response.json()
     })
-  .then(function(data){
-    sessionStorage.setItem('data', JSON.stringify(data[0].lines))
-    renderPoem()
-  })
-  }
+    .then(function(data){
+      console.log(data)
+      sessionStorage.setItem('data', JSON.stringify(data[0].lines))
+      renderPoem()
+    })
+}
+
+
+
+
 
   function toggleBlackout(){
     const blackoutButton = document.getElementById('blackoutButton')
@@ -18,7 +24,6 @@ function fetchPoem(searchTerm) {
     renderPoem()
   }
   
-
   function renderPoem() {
     const poemBox = document.getElementById('poemBox');
     //clear the page with each search?
@@ -26,7 +31,6 @@ function fetchPoem(searchTerm) {
     const lines = JSON.parse(sessionStorage.getItem('data'))
     let count = 1
     const isBlackedout = sessionStorage.getItem('isBlackedout')
-   // console.log(isBlackedout)
     for (let i = 0; i < lines.length; i++){
       const div = document.createElement('div')
       const span = document.createElement('span')
@@ -43,22 +47,25 @@ function fetchPoem(searchTerm) {
         count++;
       })
       div.appendChild(span)
-      
+
       poemBox.appendChild(div)
       
     }
   }
   
+  let dropdownValue;
   const searchForm = document.getElementById('userInput')
   searchForm.addEventListener('submit', event => {
     event.preventDefault()
     //console.log(event)
-    const inputText = event.target.elements[0].value
-    console.log(inputText)
-    //console.log(event.target)
-    //console.log(event.target.elements[0].value)
-    fetchPoem(inputText);
-    event.target.elements[0].value = ''
+    dropdownValue = event.target.elements[0].value
+    let inputText = event.target.elements[1].value
+    console.log('dropdown' + dropdownValue)
+    console.log('inputText ' + inputText)
+    let searchType = 'lines'
+    if (dropdownValue === 'author' || dropdownValue === 'title') searchType = dropdownValue
+    fetchPoem(searchType, inputText);
+    event.target.elements[1].value = ''
   });
 
   const blackoutButton = document.getElementById('blackoutButton')
@@ -66,4 +73,24 @@ function fetchPoem(searchTerm) {
     toggleBlackout();
   });
   
-//need to catch error that results when you search for a word that's not in archive
+
+
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function dropdownFxn() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}

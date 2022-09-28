@@ -1,13 +1,15 @@
 
 function fetchPoem(searchType, searchTerm) {
-  console.log(dropdownValue)
+  //console.log(dropdownValue)
     fetch(`https://poetrydb.org/${searchType}/${searchTerm}`)
     .then(function(response){
       return response.json()
     })
     .then(function(data){
-      console.log(data)
-      sessionStorage.setItem('data', JSON.stringify(data[0].lines))
+      //console.log(data)
+      sessionStorage.setItem('author', JSON.stringify(data[0].author))
+      sessionStorage.setItem('title', JSON.stringify(data[0].title))
+      sessionStorage.setItem('lines', JSON.stringify(data[0].lines))
       renderPoem()
     })
 }
@@ -24,15 +26,23 @@ function fetchPoem(searchType, searchTerm) {
     renderPoem()
   }
   
+  const poemBox = document.getElementById('poemBox');
+  //const linebreak = document.createElement('br')
+
   function renderPoem() {
-    const poemBox = document.getElementById('poemBox');
-    //clear the page with each search?
-    poemBox.innerHTML = ''
-    const lines = JSON.parse(sessionStorage.getItem('data'))
+    const titleDiv = document.createElement('div')
+    titleDiv.innerHTML = JSON.parse(sessionStorage.getItem('title'))
+    poemBox.appendChild(titleDiv)
+
+    const authorDiv = document.createElement('div')
+    authorDiv.innerHTML = JSON.parse(sessionStorage.getItem('author'))
+    poemBox.appendChild(authorDiv)
+
+    const lines = JSON.parse(sessionStorage.getItem('lines'))
     let count = 1
     const isBlackedout = sessionStorage.getItem('isBlackedout')
     for (let i = 0; i < lines.length; i++){
-      const div = document.createElement('div')
+      const linesDiv = document.createElement('div')
       const span = document.createElement('span')
       lines[i].split(' ').map((word) => {
         const innerSpan = document.createElement('span')
@@ -46,11 +56,16 @@ function fetchPoem(searchType, searchTerm) {
         }
         count++;
       })
-      div.appendChild(span)
+      linesDiv.appendChild(span)
+      
 
-      poemBox.appendChild(div)
+      
+      poemBox.appendChild(linesDiv)
+      
+      
       
     }
+    
   }
   
   let dropdownValue;
@@ -60,11 +75,15 @@ function fetchPoem(searchType, searchTerm) {
     //console.log(event)
     dropdownValue = event.target.elements[0].value
     let inputText = event.target.elements[1].value
-    console.log('dropdown' + dropdownValue)
-    console.log('inputText ' + inputText)
+   // console.log('dropdown' + dropdownValue)
+    //console.log('inputText ' + inputText)
+    poemBox.innerHTML = ''
+
     let searchType = 'lines'
     if (dropdownValue === 'author' || dropdownValue === 'title') searchType = dropdownValue
-    fetchPoem(searchType, inputText);
+    for (let i = 0; i < 10; i++){
+      fetchPoem(searchType, inputText);
+    }
     event.target.elements[1].value = ''
   });
 

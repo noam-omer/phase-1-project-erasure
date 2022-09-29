@@ -7,9 +7,11 @@ function fetchPoem(searchType, searchTerm) {
     })
     .then(function(data){
       //console.log(data)
-      sessionStorage.setItem('author', JSON.stringify(data[0].author))
-      sessionStorage.setItem('title', JSON.stringify(data[0].title))
-      sessionStorage.setItem('lines', JSON.stringify(data[0].lines))
+      const random = Math.floor(Math.random()*data.length)
+      console.log(random)
+      sessionStorage.setItem('author', JSON.stringify(data[random].author))
+      sessionStorage.setItem('title', JSON.stringify(data[random].title))
+      sessionStorage.setItem('lines', JSON.stringify(data[random].lines))
       renderPoem()
     })
 }
@@ -26,10 +28,10 @@ function fetchPoem(searchType, searchTerm) {
     renderPoem()
   }
   
-  const poemBox = document.getElementById('poemBox');
   //const linebreak = document.createElement('br')
-
   function renderPoem() {
+    const poemBox = document.createElement('div');
+
     const titleDiv = document.createElement('div')
     titleDiv.innerHTML = JSON.parse(sessionStorage.getItem('title'))
     poemBox.appendChild(titleDiv)
@@ -57,13 +59,17 @@ function fetchPoem(searchType, searchTerm) {
         count++;
       })
       linesDiv.appendChild(span)
-      
+
+      poemBox.appendChild(linesDiv)
+
+      poemBox.classList.add('dotted')
+
+      poemArea.appendChild(poemBox)
+
+      poemBox.addEventListener('mouseover', (event) => {console.log(event.target)});
 
       
-      poemBox.appendChild(linesDiv)
-      
-      
-      
+            
     }
     
   }
@@ -77,7 +83,7 @@ function fetchPoem(searchType, searchTerm) {
     let inputText = event.target.elements[1].value
    // console.log('dropdown' + dropdownValue)
     //console.log('inputText ' + inputText)
-    poemBox.innerHTML = ''
+    poemArea.innerHTML = ''
 
     let searchType = 'lines'
     if (dropdownValue === 'author' || dropdownValue === 'title') searchType = dropdownValue

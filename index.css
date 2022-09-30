@@ -4,6 +4,13 @@
 
 .dotted {border-style: dotted;}
 
+.selected {border-style: solid;}
+
+.clicked {
+  border-style: solid;
+  border-width: 1cm;
+  border-color: #3498DB;}
+
 
 /* Dropdown Button */
 .dropbtn {

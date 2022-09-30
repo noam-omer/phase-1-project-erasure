@@ -25,7 +25,8 @@ function fetchPoem(searchType, searchTerm) {
     const isBlackedout = sessionStorage.getItem('isBlackedout')
     sessionStorage.setItem('isBlackedout', isBlackedout === 'active' ? 'inactive' : 'active')
     blackoutButton.innerHTML = isBlackedout === 'active' ? 'Erase!' : 'Reveal!'
-    renderPoem()
+    poemArea.innerHTML = ''
+    
   }
   
   //const linebreak = document.createElement('br')
@@ -64,26 +65,28 @@ function fetchPoem(searchType, searchTerm) {
 
       poemBox.classList.add('dotted')
 
-      poemArea.appendChild(poemBox)
-
-      poemBox.addEventListener('mouseover', (event) => {console.log(event.target)});
-
-      
-            
+      poemArea.appendChild(poemBox)       
     }
+
+    poemBox.addEventListener('mouseover', (event) => {event.currentTarget.classList.add('selected')});
+    poemBox.addEventListener('mouseout', (event) => {event.currentTarget.classList.remove('selected')});
+    poemBox.addEventListener('click', (event) => {
+        console.log(event.currentTarget.classList)
+        event.currentTarget.classList.toggle('clicked')
+    })
     
   }
   
   let dropdownValue;
   const searchForm = document.getElementById('userInput')
   searchForm.addEventListener('submit', event => {
+    poemArea.innerHTML = ''
     event.preventDefault()
     //console.log(event)
     dropdownValue = event.target.elements[0].value
     let inputText = event.target.elements[1].value
    // console.log('dropdown' + dropdownValue)
     //console.log('inputText ' + inputText)
-    poemArea.innerHTML = ''
 
     let searchType = 'lines'
     if (dropdownValue === 'author' || dropdownValue === 'title') searchType = dropdownValue

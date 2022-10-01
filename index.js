@@ -8,7 +8,7 @@ function fetchPoem(searchType, searchTerm) {
     .then(function(data){
       //console.log(data)
       const random = Math.floor(Math.random()*data.length)
-      console.log(random)
+      //console.log(random)
       sessionStorage.setItem('author', JSON.stringify(data[random].author))
       sessionStorage.setItem('title', JSON.stringify(data[random].title))
       sessionStorage.setItem('lines', JSON.stringify(data[random].lines))
@@ -21,12 +21,12 @@ function fetchPoem(searchType, searchTerm) {
 
 
   function toggleBlackout(){
+
     const blackoutButton = document.getElementById('blackoutButton')
     const isBlackedout = sessionStorage.getItem('isBlackedout')
     sessionStorage.setItem('isBlackedout', isBlackedout === 'active' ? 'inactive' : 'active')
     blackoutButton.innerHTML = isBlackedout === 'active' ? 'Erase!' : 'Reveal!'
-    poemArea.innerHTML = ''
-    
+    renderPoem()
   }
   
   //const linebreak = document.createElement('br')
@@ -49,23 +49,26 @@ function fetchPoem(searchType, searchTerm) {
       const span = document.createElement('span')
       lines[i].split(' ').map((word) => {
         const innerSpan = document.createElement('span')
-        if(count%2 === 0 && isBlackedout === 'active') {
+        if(count%2 === 0 && isBlackedout === 'active' && poemBox.classList.contains('clicked')) {
           innerSpan.className = 'blacked-out'
           innerSpan.innerHTML = `${word} `
           span.appendChild(innerSpan)
+        
         }
         else{
           span.innerHTML += `${word} `
         }
+        //console.log(span.parentElement)
         count++;
       })
       linesDiv.appendChild(span)
-
+      
       poemBox.appendChild(linesDiv)
-
       poemBox.classList.add('dotted')
-
-      poemArea.appendChild(poemBox)       
+        
+      poemArea.appendChild(poemBox)
+      
+      //poemArea.appendChild(document.createElement('br'))
     }
 
     poemBox.addEventListener('mouseover', (event) => {event.currentTarget.classList.add('selected')});

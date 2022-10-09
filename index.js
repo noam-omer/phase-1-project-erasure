@@ -48,23 +48,26 @@ function fetchPoem(searchType, searchTerm) {
       poemBox.appendChild(authorDiv)
   
       poemInfo.lines.forEach((line) => {
-        const linesDiv = document.createElement('div')
-        const span = document.createElement('span')
+        const lineDiv = document.createElement('div')
+        const lineSpan = document.createElement('span')
 
-        
-        line.split(' ').map((word) => {
-          const innerSpan = document.createElement('span')
-          if(Math.random() > 0.5 && isBlackedout === true ) {
-            innerSpan.className = 'blacked-out'
-            innerSpan.innerHTML = `${word} `
-            span.appendChild(innerSpan)         
+       if (isBlackedout){ 
+        line.split(' ').forEach((word) => {
+          const wordSpan = document.createElement('span')
+          if(Math.random() > 0.5) {
+            wordSpan.className = 'blacked-out'
+            wordSpan.innerHTML = `${word} `
+            lineSpan.appendChild(wordSpan)         
           }
           else{
-            span.innerHTML += `${word} `
+            lineSpan.innerHTML += `${word} `
           }
         })
-        linesDiv.appendChild(span) 
-        poemBox.appendChild(linesDiv)      
+      }
+      else lineSpan.innerHTML = line
+
+        lineDiv.appendChild(lineSpan) 
+        poemBox.appendChild(lineDiv)      
       })
 
       poemArea.appendChild(poemBox)
@@ -93,22 +96,8 @@ function fetchPoem(searchType, searchTerm) {
   });
 
  
-function dropdownFxn() {
-  document.getElementById("myDropdown").classList.toggle("show");
-}
 
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    let dropdowns = document.getElementsByClassName("dropdown-content");
-    let i;
-    for (i = 0; i < dropdowns.length; i++) {
-      let openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
+
 
 function resetBlackout(){
     isBlackedout = false;

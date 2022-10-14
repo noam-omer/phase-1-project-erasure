@@ -1,15 +1,26 @@
 
 let poemArray = []
-let numbersArray = []
+let IDArray = []
 let isBlackedout = false;
 let poemArea = document.getElementById('poemArea')
 poemArea.innerHTML = ''
 
-
+let dropdownValue;
+const searchForm = document.getElementById('userInput')
+ searchForm.addEventListener('submit', event => {
+  event.preventDefault()
+  resetBlackout()
+  dropdownValue = event.target.elements[0].value
+  let inputText = event.target.elements[1].value
+  let searchType = 'lines'
+  if (dropdownValue === 'author' || dropdownValue === 'title') searchType = dropdownValue
+    fetchPoem(searchType, inputText);
+  event.target.elements[1].value = ''
+});
 
 function fetchPoem(searchType, searchTerm) {
     poemArray = []
-    numbersArray = []
+    IDArray = []
     fetch(`https://poetrydb.org/${searchType}/${searchTerm}`)
     .then(function(response){
       return response.json()
@@ -20,16 +31,16 @@ function fetchPoem(searchType, searchTerm) {
       for (let i = 0; i < 10; i++){
         const random = Math.floor(Math.random()*data.length)
         const {author, title, lines} = data[random]
-        if (numbersArray.includes(random) === false){
+        if (IDArray.includes(random) === false){
         poemArray.push({
             author, title, lines
           })
-        numbersArray.push(random)
+        IDArray.push(random)
         }
       }
         renderPoems()
       }
-      })
+    })
 }
   
   function renderPoems() {
@@ -81,23 +92,6 @@ function fetchPoem(searchType, searchTerm) {
       })
     })
   }
-    
-  let dropdownValue;
-  const searchForm = document.getElementById('userInput')
-   searchForm.addEventListener('submit', event => {
-    event.preventDefault()
-    resetBlackout()
-    dropdownValue = event.target.elements[0].value
-    let inputText = event.target.elements[1].value
-    let searchType = 'lines'
-    if (dropdownValue === 'author' || dropdownValue === 'title') searchType = dropdownValue
-      fetchPoem(searchType, inputText);
-    event.target.elements[1].value = ''
-  });
-
- 
-
-
 
 function resetBlackout(){
     isBlackedout = false;

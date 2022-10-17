@@ -60,24 +60,8 @@ function fetchPoem(searchType, searchTerm) {
   
       poemInfo.lines.forEach((line) => {
         const lineDiv = document.createElement('div')
-        const lineSpan = document.createElement('span')
-
-       if (isBlackedout){ 
-        line.split(' ').forEach((word) => {
-          const wordSpan = document.createElement('span')
-          if(Math.random() > 0.5) {
-            wordSpan.className = 'blacked-out'
-            wordSpan.innerHTML = `${word} `
-            lineSpan.appendChild(wordSpan)         
-          }
-          else{
-            lineSpan.innerHTML += `${word} `
-          }
-        })
-      }
-      else lineSpan.innerHTML = line
-
-        lineDiv.appendChild(lineSpan) 
+       if (isBlackedout) blackoutHelper (line, lineDiv)
+       else lineDiv.innerHTML = line
         poemBox.appendChild(lineDiv)      
       })
 
@@ -92,6 +76,23 @@ function fetchPoem(searchType, searchTerm) {
       })
     })
   }
+
+function blackoutHelper(line, lineDiv){  
+  const lineSpan = document.createElement('span')
+ 
+    line.split(' ').forEach((word) => {
+      const wordSpan = document.createElement('span')
+      if(Math.random() > 0.5) {
+        wordSpan.className = 'blacked-out'
+        wordSpan.innerHTML = `${word} `
+        lineSpan.appendChild(wordSpan)         
+      }
+      else{
+        lineSpan.innerHTML += `${word} `
+      }
+    })
+    lineDiv.appendChild(lineSpan)
+}
 
 function resetBlackout(){
     isBlackedout = false;
